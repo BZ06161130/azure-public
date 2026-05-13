@@ -147,7 +147,7 @@
       <h2>Active Inbounds</h2>
       <ul>
         <li>VLESS + REALITY: <code>443/tcp</code>, SNI <code>www.microsoft.com</code></li>
-        <li>Hysteria2: <code>4443/udp</code>, SNI <code>www.microsoft.com</code></li>
+        <li>Hysteria2: <code>4443/udp</code>, SNI <code>bing.com</code></li>
       </ul>
     </section>
 
@@ -166,8 +166,19 @@
 
     <section>
       <h2>Issue Fixed</h2>
-      <p>Xray was previously failing because Hysteria2 referenced missing certificate files: <code>/etc/x-ui/hy2.crt</code> and <code>/etc/x-ui/hy2.key</code>.</p>
-      <p>A self-signed certificate/key pair was created, Hysteria2 SNI was corrected to <code>www.microsoft.com</code>, and <code>x-ui</code> was restarted.</p>
+      <p>Xray was previously failing because Hysteria2 referenced missing certificate files.</p>
+      <p>The final working certificate pair is <code>/root/cert/server.crt</code> and <code>/root/cert/server.key</code>. Hysteria2 SNI was changed to <code>bing.com</code>, OCSP stapling was disabled, and <code>x-ui</code> was restarted.</p>
+    </section>
+
+    <section>
+      <h2>Terraform Recovery</h2>
+      <p>The private repository now contains a reusable Terraform layout for recreating the Azure VM in another account or subscription.</p>
+      <ul>
+        <li>It opens TCP <code>443</code>, UDP <code>4443</code>, TCP <code>2096</code>, TCP <code>2053</code>, and SSH.</li>
+        <li>It creates <code>/root/cert/server.crt</code> and <code>/root/cert/server.key</code> for Hysteria2.</li>
+        <li>It applies BBR and UDP buffer tuning through <code>/etc/sysctl.d</code>.</li>
+        <li>It does not publish VPN secrets; panel database backups remain separate.</li>
+      </ul>
     </section>
 
     <section>
