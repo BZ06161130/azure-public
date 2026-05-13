@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Azure 3X-UI Public Handoff</title>
+  <style>
+    :root {
+      --bg: #f7f9fb;
+      --panel: #ffffff;
+      --text: #17202a;
+      --muted: #5f6b7a;
+      --border: #d8dee6;
+      --ok: #0f7b45;
+      --warn: #9a5b00;
+      --code-bg: #101820;
+      --code-text: #e8f0f8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+
+    main {
+      width: min(980px, calc(100% - 32px));
+      margin: 32px auto;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin: 16px 0 8px;
+    }
+
+    p {
+      margin: 8px 0;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 16px 0;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 22px;
+    }
+
+    li {
+      margin: 6px 0;
+    }
+
+    code {
+      background: #edf2f7;
+      border: 1px solid #d8dee6;
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 0.94em;
+    }
+
+    pre {
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: var(--code-bg);
+      color: var(--code-text);
+      border-radius: 8px;
+      padding: 14px;
+      margin: 10px 0 0;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .status {
+      display: inline-block;
+      color: #fff;
+      background: var(--ok);
+      border-radius: 999px;
+      padding: 2px 10px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .warning {
+      border-left: 4px solid var(--warn);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Azure 3X-UI Public Handoff</h1>
+      <p class="subtitle">Public operational summary. Sensitive connection values are intentionally redacted.</p>
+    </header>
+
+    <section class="warning">
+      <h2>Security Notice</h2>
+      <p>This public page does not include VPN passwords, UUIDs, REALITY keys, private keys, or full subscription URLs.</p>
+      <p>The full handoff with live connection details is kept in the private repository.</p>
+    </section>
+
+    <section>
+      <h2>Server</h2>
+      <ul>
+        <li>Panel service: <code>x-ui</code></li>
+        <li>3X-UI version observed: <code>3.0.1</code></li>
+        <li>Panel HTTP port: <code>2053</code></li>
+        <li>Subscription HTTP port: <code>2096</code></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Active Inbounds</h2>
+      <ul>
+        <li>VLESS + REALITY: <code>443/tcp</code>, SNI <code>www.microsoft.com</code></li>
+        <li>Hysteria2: <code>4443/udp</code>, SNI <code>www.microsoft.com</code></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Current Status <span class="status">Working</span></h2>
+      <ul>
+        <li><code>x-ui</code>: active</li>
+        <li><code>443/tcp</code>: listening by Xray</li>
+        <li><code>4443/udp</code>: listening by Xray</li>
+        <li><code>2096/tcp</code>: Clash subscription endpoint working</li>
+        <li>Hysteria2: working</li>
+        <li>VLESS REALITY: working</li>
+        <li>Clash Verge Rev subscription: working</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Issue Fixed</h2>
+      <p>Xray was previously failing because Hysteria2 referenced missing certificate files: <code>/etc/x-ui/hy2.crt</code> and <code>/etc/x-ui/hy2.key</code>.</p>
+      <p>A self-signed certificate/key pair was created, Hysteria2 SNI was corrected to <code>www.microsoft.com</code>, and <code>x-ui</code> was restarted.</p>
+    </section>
+
+    <section>
+      <h2>Network Tuning</h2>
+      <pre>net.ipv4.tcp_congestion_control = bbr
+net.core.default_qdisc = fq
+net.core.rmem_max = 16777216
+net.core.wmem_max = 16777216</pre>
+    </section>
+
+    <section>
+      <h2>Azure NSG / Firewall Requirements</h2>
+      <ul>
+        <li>Allow inbound <code>TCP 443</code></li>
+        <li>Allow inbound <code>UDP 4443</code></li>
+        <li>Allow inbound <code>TCP 2096</code> for Clash subscription access</li>
+        <li>Optional: allow <code>TCP 2053</code> only from trusted admin IPs for panel access</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Useful Verification Commands</h2>
+      <pre>sudo systemctl status x-ui --no-pager
+sudo ss -ltnup | grep -E ':(443|4443|2053|2096)\b'
+sysctl net.ipv4.tcp_congestion_control net.core.rmem_max net.core.wmem_max
+journalctl -u x-ui --since '1 hour ago' --no-pager</pre>
+    </section>
+  </main>
+</body>
+</html>
