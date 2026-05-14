@@ -1,0 +1,25 @@
+# Terraform migration note
+#
+# This file is intentionally retained as a pointer for people who saw the
+# original monolithic draft. Do not copy this file into Terraform.
+#
+# Use the maintained Terraform layout instead:
+# - terraform/main.tf
+# - terraform/variables.tf
+# - terraform/outputs.tf
+# - terraform/cloud-init.sh.tftpl
+# - terraform/README.md
+#
+# Key fixes in the maintained version:
+# - Adds provider/version requirements and an explicit subscription_id variable.
+# - Uses variables for account, subscription, region, names, ports, VM size, and
+#   admin CIDRs.
+# - Associates the Network Security Group with the NIC.
+# - Opens the real ports used by this setup: TCP 443, UDP 4443, TCP 2096,
+#   TCP 2053, and TCP 22.
+# - Keeps Spot disabled by default for proxy stability.
+# - Creates /root/cert/server.crt and /root/cert/server.key for Hysteria2.
+# - Applies BBR and UDP buffer tuning through /etc/sysctl.d.
+#
+# See terraform/README.md for usage. The original draft was removed to avoid
+# accidentally applying a stale configuration.

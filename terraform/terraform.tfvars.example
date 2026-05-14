@@ -1,0 +1,25 @@
+# Copy to terraform.tfvars and edit for the target Azure account/subscription.
+
+subscription_id = "00000000-0000-0000-0000-000000000000"
+
+prefix   = "proxy"
+location = "westus2"
+
+# Use your actual admin source IP/CIDR instead of "*" when possible.
+allowed_admin_cidrs = ["203.0.113.10/32"]
+
+# Public proxy ports usually need to be reachable from client networks.
+proxy_allowed_cidrs        = ["*"]
+subscription_allowed_cidrs = ["*"]
+
+ssh_public_key_path = "~/.ssh/id_rsa.pub"
+vm_size             = "Standard_B2ms"
+use_spot            = false
+
+hysteria_cert_cn = "bing.com"
+
+# Set false if you prefer to install 3X-UI manually after the VM is provisioned.
+install_3x_ui = true
+
+# Optional developer tooling. Keep false for a lean proxy VM.
+install_workspace_tools = false

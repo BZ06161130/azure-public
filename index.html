@@ -172,7 +172,21 @@
 
     <section>
       <h2>Terraform Recovery</h2>
-      <p>The private repository now contains a reusable Terraform layout for recreating the Azure VM in another account or subscription.</p>
+      <p>This public page now includes the non-secret Terraform recovery files for recreating the Azure VM in another account or subscription.</p>
+      <ul>
+        <li><a href="AGENT_QUICKSTART.md">AGENT_QUICKSTART.md</a></li>
+        <li><a href="terraform/README.md">terraform/README.md</a></li>
+        <li><a href="terraform/main.tf">terraform/main.tf</a></li>
+        <li><a href="terraform/variables.tf">terraform/variables.tf</a></li>
+        <li><a href="terraform/outputs.tf">terraform/outputs.tf</a></li>
+        <li><a href="terraform/cloud-init.sh.tftpl">terraform/cloud-init.sh.tftpl</a></li>
+        <li><a href="terraform/terraform.tfvars.example">terraform/terraform.tfvars.example</a></li>
+        <li><a href="Terraform%20Script.txt">Terraform Script.txt</a> legacy migration note</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Automation Scope</h2>
       <ul>
         <li>It opens TCP <code>443</code>, UDP <code>4443</code>, TCP <code>2096</code>, TCP <code>2053</code>, and SSH.</li>
         <li>It creates <code>/root/cert/server.crt</code> and <code>/root/cert/server.key</code> for Hysteria2.</li>
