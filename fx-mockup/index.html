@@ -3,31 +3,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FX Timing Copilot Mockup</title>
+  <title>FX Timing App Mockup</title>
   <style>
     :root {
-      color-scheme: light;
-      --bg: #f6f7f9;
-      --panel: #ffffff;
-      --ink: #121417;
+      --bg: #eef2f6;
+      --screen: #f8fafc;
+      --ink: #111827;
       --muted: #667085;
-      --line: #d9dee7;
-      --green: #1f8f5f;
-      --green-soft: #e8f6ef;
-      --blue: #2266d2;
+      --line: #dde3ea;
+      --panel: #ffffff;
+      --teal: #137d6d;
+      --teal-soft: #e6f5f1;
+      --amber: #a86f16;
+      --amber-soft: #fff2d6;
+      --blue: #255fbe;
       --blue-soft: #eaf1ff;
-      --amber: #b7791f;
-      --amber-soft: #fff3d8;
-      --red: #c2413a;
+      --red: #b33b34;
       --red-soft: #fdebea;
-      --cyan: #0f7b8c;
-      --violet: #7357c8;
-      --shadow: 0 14px 34px rgba(20, 28, 38, 0.08);
+      --shadow: 0 18px 45px rgba(15, 23, 42, 0.14);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -38,41 +34,51 @@
       letter-spacing: 0;
     }
 
-    button, input, select {
-      font: inherit;
+    button, input, select { font: inherit; }
+
+    .stage {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
     }
 
     .app {
+      width: min(430px, 100%);
+      min-height: min(900px, calc(100vh - 48px));
+      background: var(--screen);
+      border: 1px solid #cfd7e2;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
       display: grid;
-      grid-template-columns: 248px minmax(0, 1fr);
-      min-height: 100vh;
+      grid-template-rows: auto 1fr auto;
     }
 
-    .sidebar {
-      background: #101820;
-      color: #f8fafc;
-      padding: 22px 16px;
+    .topbar {
+      padding: 14px 16px 10px;
       display: flex;
-      flex-direction: column;
-      gap: 22px;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--screen);
     }
 
     .brand {
-      display: grid;
-      grid-template-columns: 40px 1fr;
-      gap: 10px;
+      display: flex;
       align-items: center;
+      gap: 10px;
     }
 
-    .brand-mark {
-      width: 40px;
-      height: 40px;
+    .mark {
+      width: 34px;
+      height: 34px;
       border-radius: 8px;
-      background: #2dd4bf;
-      color: #101820;
       display: grid;
       place-items: center;
+      background: #101820;
+      color: #ffffff;
       font-weight: 800;
+      font-size: 13px;
     }
 
     .brand strong {
@@ -82,122 +88,155 @@
     }
 
     .brand span {
-      color: #a8b3c1;
+      display: block;
+      color: var(--muted);
       font-size: 12px;
-    }
-
-    .nav {
-      display: grid;
-      gap: 6px;
-    }
-
-    .nav a {
-      display: grid;
-      grid-template-columns: 28px 1fr;
-      align-items: center;
-      gap: 8px;
-      color: #cbd5e1;
-      text-decoration: none;
-      padding: 10px 9px;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-
-    .nav a.active {
-      background: #1d2a36;
-      color: #ffffff;
-    }
-
-    .nav-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 7px;
-      background: rgba(255, 255, 255, 0.08);
-      display: grid;
-      place-items: center;
-      font-size: 12px;
-      color: #94f3de;
-    }
-
-    .sidebar-summary {
-      margin-top: auto;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 8px;
-      padding: 14px;
-      display: grid;
-      gap: 11px;
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    .sidebar-summary .small {
-      color: #a8b3c1;
-      font-size: 12px;
-    }
-
-    .sidebar-summary .value {
-      font-size: 24px;
-      font-weight: 760;
-    }
-
-    .main {
-      padding: 22px;
-      display: grid;
-      gap: 18px;
-      align-content: start;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 14px;
-      min-height: 44px;
-    }
-
-    .title-block h1 {
-      margin: 0;
-      font-size: 22px;
       line-height: 1.2;
     }
 
-    .title-block p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 13px;
+    .icon-button {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      color: #344054;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
     }
 
-    .top-actions {
+    .content {
+      padding: 8px 14px 18px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+      overflow-y: auto;
+    }
+
+    .decision {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .pill-row {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      justify-content: flex-end;
+      align-items: center;
     }
 
-    .btn {
-      min-height: 38px;
-      border: 1px solid var(--line);
-      background: #fff;
-      color: var(--ink);
-      border-radius: 8px;
-      padding: 0 13px;
+    .pill {
+      min-height: 26px;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      cursor: default;
-      font-weight: 650;
+      border-radius: 999px;
+      padding: 0 9px;
+      font-size: 12px;
+      font-weight: 760;
       white-space: nowrap;
     }
 
-    .btn.primary {
-      border-color: #101820;
-      background: #101820;
-      color: #fff;
+    .pill.wait {
+      color: var(--amber);
+      background: var(--amber-soft);
+      border: 1px solid #efd18b;
     }
 
-    .btn .glyph {
+    .pill.good {
+      color: var(--teal);
+      background: var(--teal-soft);
+      border: 1px solid #bfe1d8;
+    }
+
+    .pill.info {
+      color: var(--blue);
+      background: var(--blue-soft);
+      border: 1px solid #cbdcff;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.03;
+      letter-spacing: 0;
+    }
+
+    .reason {
+      margin: 0;
+      color: #384250;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .amount-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .amount {
+      min-height: 86px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 11px;
+      display: grid;
+      gap: 4px;
+      align-content: center;
+      background: #fbfcfe;
+    }
+
+    .amount label {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.2;
+    }
+
+    .amount strong {
+      font-size: 23px;
+      line-height: 1.05;
+    }
+
+    .amount small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .action-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .button {
+      min-height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--ink);
+      font-weight: 760;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 12px;
+      white-space: nowrap;
+    }
+
+    .button.primary {
+      border-color: #101820;
+      background: #101820;
+      color: #ffffff;
+    }
+
+    .button-icon {
       width: 22px;
       height: 22px;
-      border-radius: 6px;
+      border-radius: 7px;
       display: grid;
       place-items: center;
       background: rgba(255, 255, 255, 0.12);
@@ -205,911 +244,374 @@
       line-height: 1;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.34fr) minmax(320px, 0.66fr);
-      gap: 18px;
-      align-items: start;
-    }
-
-    .panel {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      box-shadow: var(--shadow);
-    }
-
-    .panel-head {
-      padding: 16px 18px 0;
+    .section-title {
       display: flex;
       justify-content: space-between;
-      gap: 12px;
-      align-items: flex-start;
+      align-items: baseline;
+      gap: 10px;
+      padding: 4px 2px 0;
     }
 
-    .panel-head h2 {
+    .section-title h2 {
       margin: 0;
-      font-size: 15px;
-      line-height: 1.25;
-    }
-
-    .panel-head p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .decision {
-      padding: 18px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 16px;
-      align-items: stretch;
-    }
-
-    .decision-main {
-      display: grid;
-      gap: 14px;
-    }
-
-    .status-row {
-      display: flex;
-      gap: 9px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .badge {
-      display: inline-flex;
-      min-height: 28px;
-      align-items: center;
-      border-radius: 999px;
-      padding: 0 10px;
-      font-size: 12px;
-      font-weight: 760;
-      white-space: nowrap;
-    }
-
-    .badge.wait {
-      color: var(--amber);
-      background: var(--amber-soft);
-      border: 1px solid #efd28f;
-    }
-
-    .badge.good {
-      color: var(--green);
-      background: var(--green-soft);
-      border: 1px solid #bee4cf;
-    }
-
-    .badge.info {
-      color: var(--blue);
-      background: var(--blue-soft);
-      border: 1px solid #cbdcff;
-    }
-
-    .decision-title {
-      margin: 0;
-      font-size: 42px;
-      line-height: 1;
-      letter-spacing: 0;
-    }
-
-    .decision-copy {
-      max-width: 760px;
-      margin: 0;
-      color: #384250;
-      font-size: 15px;
-      line-height: 1.55;
-    }
-
-    .money-line {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(120px, 1fr));
-      gap: 10px;
-    }
-
-    .metric {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 12px;
-      min-height: 92px;
-      display: grid;
-      align-content: center;
-      gap: 4px;
-      background: #fff;
-    }
-
-    .metric label {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .metric strong {
-      font-size: 22px;
-      line-height: 1.1;
-    }
-
-    .metric .up {
-      color: var(--green);
-      font-weight: 760;
-      font-size: 12px;
-    }
-
-    .target-card {
-      width: 250px;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      padding: 14px;
-      display: grid;
-      gap: 12px;
-      background: #fbfcfe;
-    }
-
-    .target-card .target-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .target-card .target-amount {
-      font-size: 28px;
-      font-weight: 780;
-      line-height: 1;
-    }
-
-    .ring {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: conic-gradient(var(--green) 0 74%, #e8edf4 74% 100%);
-      position: relative;
-      font-weight: 780;
-      font-size: 13px;
-    }
-
-    .ring:after {
-      content: "";
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: #fbfcfe;
-      position: absolute;
-    }
-
-    .ring span {
-      position: relative;
-      z-index: 1;
-    }
-
-    .progress {
-      height: 9px;
-      border-radius: 999px;
-      background: #e8edf4;
-      overflow: hidden;
-    }
-
-    .progress span {
-      display: block;
-      width: 74%;
-      height: 100%;
-      background: var(--green);
-    }
-
-    .target-foot {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-
-    .form {
-      padding: 18px;
-      display: grid;
-      gap: 13px;
-    }
-
-    .field-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .field {
-      display: grid;
-      gap: 6px;
-    }
-
-    .field label {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 650;
-    }
-
-    .field input,
-    .field select {
-      width: 100%;
-      min-height: 40px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 0 11px;
-      background: #fff;
-      color: var(--ink);
-    }
-
-    .segmented {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .segmented span {
-      min-height: 38px;
-      display: grid;
-      place-items: center;
-      font-size: 12px;
-      font-weight: 760;
-      color: var(--muted);
-      background: #fff;
-      border-right: 1px solid var(--line);
-    }
-
-    .segmented span:last-child {
-      border-right: 0;
-    }
-
-    .segmented .selected {
-      color: var(--green);
-      background: var(--green-soft);
-    }
-
-    .routes {
-      padding: 8px 18px 18px;
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 720px;
-      font-size: 13px;
-    }
-
-    th {
-      color: var(--muted);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0;
-      text-align: left;
-      padding: 10px 8px;
-      border-bottom: 1px solid var(--line);
-      white-space: nowrap;
-    }
-
-    td {
-      padding: 13px 8px;
-      border-bottom: 1px solid #eef1f5;
-      vertical-align: middle;
-      white-space: nowrap;
-    }
-
-    tr:last-child td {
-      border-bottom: 0;
-    }
-
-    .route-name {
-      display: grid;
-      gap: 2px;
-    }
-
-    .route-name strong {
-      font-size: 13px;
-    }
-
-    .route-name span {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .net {
-      font-size: 17px;
-      font-weight: 780;
-    }
-
-    .gain {
-      color: var(--green);
-      font-weight: 760;
-    }
-
-    .loss {
-      color: var(--red);
-      font-weight: 760;
-    }
-
-    .bar {
-      width: 150px;
-      height: 8px;
-      border-radius: 999px;
-      background: #e8edf4;
-      overflow: hidden;
-    }
-
-    .bar span {
-      display: block;
-      height: 100%;
-      border-radius: inherit;
-    }
-
-    .bar .green {
-      width: 92%;
-      background: var(--green);
-    }
-
-    .bar .blue {
-      width: 81%;
-      background: var(--blue);
-    }
-
-    .bar .amber {
-      width: 73%;
-      background: var(--amber);
-    }
-
-    .route-actions {
-      display: inline-flex;
-      gap: 6px;
-    }
-
-    .icon-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      background: #fff;
-      display: inline-grid;
-      place-items: center;
-      font-weight: 800;
-      color: #344054;
-    }
-
-    .right-stack {
-      display: grid;
-      gap: 18px;
-    }
-
-    .alert-list {
-      padding: 8px 18px 18px;
-      display: grid;
-      gap: 10px;
-    }
-
-    .alert-item {
-      display: grid;
-      grid-template-columns: 34px 1fr auto;
-      gap: 10px;
-      align-items: center;
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
-    }
-
-    .alert-dot {
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
-      display: grid;
-      place-items: center;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .alert-dot.green {
-      background: var(--green-soft);
-      color: var(--green);
-    }
-
-    .alert-dot.blue {
-      background: var(--blue-soft);
-      color: var(--blue);
-    }
-
-    .alert-dot.amber {
-      background: var(--amber-soft);
-      color: var(--amber);
-    }
-
-    .alert-copy strong {
-      display: block;
-      font-size: 13px;
+      font-size: 14px;
       line-height: 1.2;
     }
 
-    .alert-copy span,
-    .alert-time {
-      color: var(--muted);
+    .section-title a {
+      color: var(--blue);
       font-size: 12px;
-    }
-
-    .record {
-      display: grid;
-      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-      gap: 18px;
-      padding: 18px;
-    }
-
-    .input-sample {
-      background: #101820;
-      color: #e5edf5;
-      border-radius: 8px;
-      padding: 14px;
-      min-height: 168px;
-      display: grid;
-      align-content: center;
-      gap: 8px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 13px;
-      line-height: 1.45;
-      overflow-x: auto;
-    }
-
-    .input-sample .dim {
-      color: #94a3b8;
-    }
-
-    .csv-preview {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      overflow: hidden;
-      align-self: stretch;
-    }
-
-    .csv-row {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr 1fr 1fr 1fr;
-      min-height: 42px;
-      align-items: center;
-      border-bottom: 1px solid #eef1f5;
-      font-size: 12px;
-    }
-
-    .csv-row:last-child {
-      border-bottom: 0;
-    }
-
-    .csv-row.header {
-      background: #f8fafc;
-      color: var(--muted);
+      text-decoration: none;
       font-weight: 760;
-    }
-
-    .csv-row span {
-      padding: 9px 10px;
-      overflow: hidden;
-      text-overflow: ellipsis;
       white-space: nowrap;
     }
 
-    .toast {
-      position: fixed;
-      right: 24px;
-      bottom: 22px;
-      width: min(380px, calc(100vw - 48px));
-      background: #101820;
-      color: #fff;
+    .compact-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
       border-radius: 8px;
-      box-shadow: 0 20px 44px rgba(16, 24, 32, 0.24);
-      padding: 14px;
+      padding: 13px;
       display: grid;
-      gap: 10px;
-      z-index: 3;
+      gap: 11px;
     }
 
-    .toast strong {
-      font-size: 14px;
-    }
-
-    .toast p {
-      margin: 0;
-      color: #cbd5e1;
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .toast-actions {
+    .goal-line {
       display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .goal-line strong {
+      display: block;
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    .goal-line span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .score {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: conic-gradient(var(--teal) 0 74%, #e7edf3 74% 100%);
+      display: grid;
+      place-items: center;
+      position: relative;
+      flex: 0 0 auto;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--teal);
+    }
+
+    .score:before {
+      content: "";
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #ffffff;
+      position: absolute;
+    }
+
+    .score span { position: relative; }
+
+    .route-row {
+      display: grid;
+      grid-template-columns: 36px 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .route-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 12px;
+    }
+
+    .route-copy strong {
+      display: block;
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .route-copy span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
+      line-height: 1.25;
+    }
+
+    .route-net {
+      text-align: right;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .route-net span {
+      display: block;
+      color: var(--teal);
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .divider {
+      height: 1px;
+      background: #edf1f5;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      justify-content: flex-end;
     }
 
-    .toast-actions .btn {
-      min-height: 34px;
-      border-color: rgba(255,255,255,0.2);
-      background: rgba(255,255,255,0.08);
-      color: #fff;
+    .mini {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 9px;
+      min-height: 66px;
+      display: grid;
+      gap: 3px;
+      align-content: center;
+      background: #fbfcfe;
     }
 
-    .toast-actions .btn.primary {
-      background: #2dd4bf;
-      color: #101820;
-      border-color: #2dd4bf;
+    .mini label {
+      color: var(--muted);
+      font-size: 11px;
     }
 
-    @media (max-width: 1120px) {
-      .app {
-        grid-template-columns: 78px minmax(0, 1fr);
-      }
-
-      .brand {
-        grid-template-columns: 40px;
-      }
-
-      .brand div:not(.brand-mark),
-      .nav a span:not(.nav-icon),
-      .sidebar-summary {
-        display: none;
-      }
-
-      .nav a {
-        grid-template-columns: 28px;
-        justify-content: center;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .right-stack {
-        grid-template-columns: 1fr 1fr;
-      }
+    .mini strong {
+      font-size: 14px;
+      line-height: 1.15;
     }
 
-    @media (max-width: 760px) {
-      .app {
+    .record-input {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 11px;
+      display: grid;
+      gap: 7px;
+      color: #344054;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.35;
+      overflow-x: auto;
+    }
+
+    .record-input .muted { color: #7c8797; }
+
+    .bottom-nav {
+      height: 68px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: center;
+      border-top: 1px solid var(--line);
+      background: #ffffff;
+    }
+
+    .nav-item {
+      height: 68px;
+      display: grid;
+      place-items: center;
+      gap: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .nav-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      border: 1px solid transparent;
+      font-size: 11px;
+      line-height: 1;
+    }
+
+    .nav-item.active { color: var(--teal); }
+
+    .nav-item.active .nav-dot {
+      background: var(--teal-soft);
+      border-color: #bfe1d8;
+    }
+
+    @media (max-width: 520px) {
+      .stage {
+        padding: 0;
         display: block;
       }
 
-      .sidebar {
-        position: sticky;
-        top: 0;
-        z-index: 2;
-        flex-direction: row;
-        align-items: center;
-        padding: 10px 12px;
-      }
-
-      .nav {
-        grid-auto-flow: column;
-        overflow-x: auto;
-      }
-
-      .main {
-        padding: 14px;
-      }
-
-      .topbar,
-      .decision,
-      .record {
-        display: grid;
-        grid-template-columns: 1fr;
-      }
-
-      .decision-title {
-        font-size: 34px;
-      }
-
-      .money-line,
-      .field-grid,
-      .right-stack {
-        grid-template-columns: 1fr;
-      }
-
-      .target-card {
+      .app {
         width: 100%;
+        min-height: 100vh;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
       }
 
-      .csv-row {
-        grid-template-columns: 1.2fr 1fr 1fr;
+      .content {
+        padding-left: 12px;
+        padding-right: 12px;
       }
+    }
 
-      .csv-row span:nth-child(4),
-      .csv-row span:nth-child(5) {
-        display: none;
+    @media (max-width: 360px) {
+      h1 { font-size: 29px; }
+      .amount-grid, .action-row, .mini-grid { grid-template-columns: 1fr; }
+      .route-row { grid-template-columns: 36px 1fr; }
+      .route-net {
+        grid-column: 2;
+        text-align: left;
       }
     }
   </style>
 </head>
 <body>
-  <div class="app">
-    <aside class="sidebar" aria-label="Navigation">
-      <div class="brand">
-        <div class="brand-mark">FX</div>
-        <div>
-          <strong>Treasury Copilot</strong>
-          <span>timing and route engine</span>
-        </div>
-      </div>
-
-      <nav class="nav">
-        <a class="active" href="#"><span class="nav-icon">D</span><span>Decisions</span></a>
-        <a href="#"><span class="nav-icon">G</span><span>Goals</span></a>
-        <a href="#"><span class="nav-icon">R</span><span>Routes</span></a>
-        <a href="#"><span class="nav-icon">Y</span><span>Yield</span></a>
-        <a href="#"><span class="nav-icon">L</span><span>Logs</span></a>
-      </nav>
-
-      <div class="sidebar-summary">
-        <div>
-          <div class="small">Extra captured this month</div>
-          <div class="value">+18.42 USD</div>
-        </div>
-        <div>
-          <div class="small">Active alerts</div>
-          <strong>7 goals watched</strong>
-        </div>
-      </div>
-    </aside>
-
-    <main class="main">
+  <div class="stage">
+    <div class="app">
       <header class="topbar">
-        <div class="title-block">
-          <h1>Today&apos;s Money Timing</h1>
-          <p>Recommendations are based on net received amount, deadline, route fees, and your target.</p>
+        <div class="brand">
+          <div class="mark">FX</div>
+          <div>
+            <strong>Money Timing</strong>
+            <span>USD card goal</span>
+          </div>
         </div>
-        <div class="top-actions">
-          <button class="btn"><span class="glyph">+</span>New Goal</button>
-          <button class="btn primary"><span class="glyph">!</span>Set Alert</button>
-        </div>
+        <button class="icon-button" aria-label="Settings">i</button>
       </header>
 
-      <section class="panel">
-        <div class="decision">
-          <div class="decision-main">
-            <div class="status-row">
-              <span class="badge wait">WAIT</span>
-              <span class="badge info">USD card funding</span>
-              <span class="badge good">Idle cash earning 4.8% APY</span>
+      <main class="content">
+        <section class="decision" aria-label="Current recommendation">
+          <div class="pill-row">
+            <span class="pill wait">WAIT</span>
+            <span class="pill good">yield stays on</span>
+          </div>
+
+          <h1>Do not convert yet</h1>
+
+          <p class="reason">
+            Best route gives 97.80 USD now. Target is 99.00 USD before Jun 01.
+          </p>
+
+          <div class="amount-grid">
+            <div class="amount">
+              <label>Best now</label>
+              <strong>97.80</strong>
+              <small>USD on card</small>
             </div>
-            <h2 class="decision-title">Do not convert yet</h2>
-            <p class="decision-copy">
-              Current best route gives 97.80 USD on card from 100.00 USDT. Your target is 99.00 USD.
-              Keep funds in yield and alert when the route improves or 48 hours before the deadline.
-            </p>
-            <div class="money-line">
-              <div class="metric">
-                <label>Source amount</label>
-                <strong>100.00 USDT</strong>
-                <span class="up">available now</span>
-              </div>
-              <div class="metric">
-                <label>Best net now</label>
-                <strong>97.80 USD</strong>
-                <span class="loss">-1.20 vs target</span>
-              </div>
-              <div class="metric">
-                <label>Target net</label>
-                <strong>99.00 USD</strong>
-                <span class="up">alert threshold</span>
-              </div>
-              <div class="metric">
-                <label>Deadline</label>
-                <strong>Jun 01</strong>
-                <span class="up">13 days left</span>
-              </div>
+            <div class="amount">
+              <label>Alert at</label>
+              <strong>99.00</strong>
+              <small>or 48h before deadline</small>
             </div>
           </div>
 
-          <aside class="target-card" aria-label="Target progress">
-            <div class="target-top">
-              <div>
-                <div class="target-amount">74%</div>
-                <div class="target-foot">confidence to wait</div>
-              </div>
-              <div class="ring"><span>74%</span></div>
-            </div>
-            <div class="progress"><span></span></div>
-            <div class="target-foot">
-              Estimated opportunity window: next 36 to 72 hours. Manual approval required before any transfer.
-            </div>
-            <button class="btn primary"><span class="glyph">=</span>Compare Routes</button>
-          </aside>
-        </div>
-      </section>
-
-      <div class="grid">
-        <section class="panel">
-          <div class="panel-head">
-            <div>
-              <h2>Route Comparison</h2>
-              <p>Ranked by final amount received, not by headline FX rate.</p>
-            </div>
-            <span class="badge good">best route found</span>
-          </div>
-          <div class="routes">
-            <table>
-              <thead>
-                <tr>
-                  <th>Route</th>
-                  <th>Net received</th>
-                  <th>Extra vs usual</th>
-                  <th>Friction</th>
-                  <th>Timing</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <div class="route-name">
-                      <strong>OKX -> Wallet -> Card</strong>
-                      <span>USDT pool, transfer fee included</span>
-                    </div>
-                  </td>
-                  <td><span class="net">97.80 USD</span></td>
-                  <td><span class="gain">+0.62 USD</span></td>
-                  <td><div class="bar"><span class="green"></span></div></td>
-                  <td>Watch</td>
-                  <td><span class="route-actions"><button class="icon-btn">!</button><button class="icon-btn">+</button></span></td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="route-name">
-                      <strong>OKX -> Card</strong>
-                      <span>direct cash-out, higher spread</span>
-                    </div>
-                  </td>
-                  <td><span class="net">97.18 USD</span></td>
-                  <td><span class="loss">baseline</span></td>
-                  <td><div class="bar"><span class="blue"></span></div></td>
-                  <td>Now</td>
-                  <td><span class="route-actions"><button class="icon-btn">i</button><button class="icon-btn">+</button></span></td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="route-name">
-                      <strong>USDC -> Card</strong>
-                      <span>stable route, smaller amount only</span>
-                    </div>
-                  </td>
-                  <td><span class="net">96.94 USD</span></td>
-                  <td><span class="loss">-0.24 USD</span></td>
-                  <td><div class="bar"><span class="amber"></span></div></td>
-                  <td>Fallback</td>
-                  <td><span class="route-actions"><button class="icon-btn">i</button><button class="icon-btn">+</button></span></td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="action-row">
+            <button class="button primary"><span class="button-icon">!</span>Set Alert</button>
+            <button class="button"><span class="button-icon">&gt;</span>Convert Now</button>
           </div>
         </section>
 
-        <div class="right-stack">
-          <section class="panel">
-            <div class="panel-head">
-              <div>
-                <h2>Goal Setup</h2>
-                <p>Define the real-life need first.</p>
-              </div>
-            </div>
-            <div class="form">
-              <div class="field-grid">
-                <label class="field">
-                  <span>Need</span>
-                  <input value="100.00 USD">
-                </label>
-                <label class="field">
-                  <span>Deadline</span>
-                  <input value="2026-06-01">
-                </label>
-              </div>
-              <div class="field-grid">
-                <label class="field">
-                  <span>Source</span>
-                  <select>
-                    <option>OKX USDT</option>
-                  </select>
-                </label>
-                <label class="field">
-                  <span>Destination</span>
-                  <select>
-                    <option>USD Card</option>
-                  </select>
-                </label>
-              </div>
-              <label class="field">
-                <span>Risk mode</span>
-                <div class="segmented">
-                  <span>Safe</span>
-                  <span class="selected">Flexible</span>
-                  <span>Aggressive</span>
-                </div>
-              </label>
-              <button class="btn primary"><span class="glyph">!</span>Watch This Goal</button>
-            </div>
-          </section>
-
-          <section class="panel">
-            <div class="panel-head">
-              <div>
-                <h2>Alerts</h2>
-                <p>Only actionable messages reach your phone.</p>
-              </div>
-            </div>
-            <div class="alert-list">
-              <div class="alert-item">
-                <div class="alert-dot green">+</div>
-                <div class="alert-copy">
-                  <strong>Target hit at 99.04 USD</strong>
-                  <span>Ready to convert 100 USDT</span>
-                </div>
-                <div class="alert-time">live</div>
-              </div>
-              <div class="alert-item">
-                <div class="alert-dot blue">R</div>
-                <div class="alert-copy">
-                  <strong>Route B is better</strong>
-                  <span>Use wallet path, not direct card</span>
-                </div>
-                <div class="alert-time">1h</div>
-              </div>
-              <div class="alert-item">
-                <div class="alert-dot amber">T</div>
-                <div class="alert-copy">
-                  <strong>Deadline backup</strong>
-                  <span>Convert even if target is missed</span>
-                </div>
-                <div class="alert-time">48h</div>
-              </div>
-            </div>
-          </section>
+        <div class="section-title">
+          <h2>Goal</h2>
+          <a href="#">Edit</a>
         </div>
-      </div>
 
-      <section class="panel">
-        <div class="panel-head">
-          <div>
-            <h2>Outcome Record</h2>
-            <p>Simple input becomes proof for route scoring and future recommendations.</p>
+        <section class="compact-card" aria-label="Goal summary">
+          <div class="goal-line">
+            <div>
+              <strong>Need 100.00 USD on card</strong>
+              <span>Source: OKX USDT - Deadline: Jun 01</span>
+            </div>
+            <div class="score"><span>74%</span></div>
           </div>
-          <span class="badge info">CSV ready</span>
+          <div class="mini-grid">
+            <div class="mini">
+              <label>Source</label>
+              <strong>100 USDT</strong>
+            </div>
+            <div class="mini">
+              <label>Deadline</label>
+              <strong>13 days</strong>
+            </div>
+            <div class="mini">
+              <label>Mode</label>
+              <strong>Flexible</strong>
+            </div>
+          </div>
+        </section>
+
+        <div class="section-title">
+          <h2>Best Route</h2>
+          <a href="#">Compare</a>
         </div>
-        <div class="record">
-          <div class="input-sample">
-            <span class="dim">Input next time:</span>
-            <span>Goal: need 100 USD card by 2026-06-01</span>
+
+        <section class="compact-card" aria-label="Best route">
+          <div class="route-row">
+            <div class="route-icon">1</div>
+            <div class="route-copy">
+              <strong>OKX - Wallet - Card</strong>
+              <span>Better than direct card by 0.62 USD</span>
+            </div>
+            <div class="route-net">
+              97.80
+              <span>net USD</span>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="route-row">
+            <div class="route-icon">2</div>
+            <div class="route-copy">
+              <strong>Keep idle USDT earning</strong>
+              <span>Convert only when target hits or deadline is close</span>
+            </div>
+            <div class="route-net">
+              +4.8%
+              <span>APY</span>
+            </div>
+          </div>
+        </section>
+
+        <div class="section-title">
+          <h2>Quick Record</h2>
+          <a href="#">Save</a>
+        </div>
+
+        <section class="compact-card" aria-label="Quick record">
+          <div class="record-input">
+            <span class="muted">Paste format</span>
             <span>Funded: 17.69 USDT</span>
-            <span>Route A: 14.9091 wallet -> 14.80 card</span>
-            <span>Route B: 2.78 remaining -> 2.65 card</span>
+            <span>A: 14.9091 wallet -&gt; 14.80 card</span>
+            <span>B: 2.78 remaining -&gt; 2.65 card</span>
           </div>
-          <div class="csv-preview" aria-label="CSV preview">
-            <div class="csv-row header">
-              <span>Pool</span><span>Path</span><span>Funded</span><span>Received</span><span>Net effect</span>
-            </div>
-            <div class="csv-row">
-              <span>17.69 USDT</span><span>wallet -> card</span><span>14.9091</span><span>14.80</span><span class="loss">-0.1091</span>
-            </div>
-            <div class="csv-row">
-              <span>17.69 USDT</span><span>remaining -> card</span><span>2.78</span><span>2.65</span><span class="loss">-0.13</span>
-            </div>
-            <div class="csv-row">
-              <span>Goal score</span><span>route learned</span><span>17.69</span><span>17.45</span><span class="gain">future baseline</span>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
+        </section>
+      </main>
 
-  <aside class="toast" aria-label="Phone alert mockup">
-    <strong>Phone alert preview</strong>
-    <p>USDT -> USD card is close to target. Wait for 99.00 USD, or approve now at 97.80 USD.</p>
-    <div class="toast-actions">
-      <button class="btn">Dismiss</button>
-      <button class="btn primary">Approve</button>
+      <nav class="bottom-nav" aria-label="App navigation">
+        <a class="nav-item active" href="#"><span class="nav-dot">D</span><span>Now</span></a>
+        <a class="nav-item" href="#"><span class="nav-dot">G</span><span>Goals</span></a>
+        <a class="nav-item" href="#"><span class="nav-dot">R</span><span>Routes</span></a>
+        <a class="nav-item" href="#"><span class="nav-dot">L</span><span>Log</span></a>
+      </nav>
     </div>
-  </aside>
+  </div>
 </body>
 </html>
